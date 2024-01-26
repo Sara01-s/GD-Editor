@@ -16,7 +16,7 @@ public sealed class EditorTilemap : MonoBehaviour {
 		if (Input.GetMouseButton(0)) {
 			var mousePosition = Utils.GetMouseWorldPosition();
 
-			_editorTilemap.SetTilemapSprite(mousePosition, Tilemap.TilemapObject.TilemapSprite.Ground);
+			_editorTilemap.SetTilemapSprite(mousePosition, Tilemap.TilemapObject.TilemapSprite.Orb);
 		}
 	}
 }

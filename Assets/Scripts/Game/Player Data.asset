@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1997afc7bd5c46478ce35871fbdbce3, type: 3}
+  m_Name: Player Data
+  m_EditorClassIdentifier: 
+  _gamemodes:
+  - {fileID: 8193688630697462524, guid: 84c2281af0ac9c94f8ec53c4e08e25cb, type: 3}
+  - {fileID: 4050528564607216415, guid: ac3facd04306ca24787921eb6534389f, type: 3}
+  CurrentGamemode: {fileID: 4050528564607216415, guid: ac3facd04306ca24787921eb6534389f, type: 3}
+  Position: {x: -19.5, y: -6.2682867}
+  SpeedType: 0
+  IsGrounded: 1
+  MaxYSpeed: -24.2

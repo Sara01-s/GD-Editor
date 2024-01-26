@@ -1,0 +1,76 @@
+{
+    "name": "InputMap",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "6d68ad68-8459-4269-ba23-f324954e958f",
+            "actions": [
+                {
+                    "name": "MainInput",
+                    "type": "Button",
+                    "id": "98974e12-ff1e-4da1-b5af-b914756f4d73",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EscInput",
+                    "type": "Button",
+                    "id": "f52ad1fb-b60a-4abb-8df0-7bc34c75d240",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2e75a705-eae3-413a-8028-b22b6a3140b1",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MainInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f33d11e4-049e-405f-a086-2ea33549f8af",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MainInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8be24a4c-8607-4f9b-8589-4f6e6900fff8",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MainInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bd5323b3-2ad0-425f-96ad-53e258b69d77",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EscInput",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

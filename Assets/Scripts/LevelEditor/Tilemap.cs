@@ -18,7 +18,8 @@ public sealed class Tilemap {
 
 		public enum TilemapSprite {
 			None,
-			Ground
+			Ground,
+			Orb,
 		}
 
 		private readonly Grid<TilemapObject> _tilemapGrid;
