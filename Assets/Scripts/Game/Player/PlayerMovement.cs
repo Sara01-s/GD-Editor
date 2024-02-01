@@ -14,6 +14,7 @@ namespace Game {
 		private void Awake() {
 			_playerBody = GetComponent<Rigidbody2D>();
 			_player.Body = _playerBody;
+			_player.Transform = transform;
 
 			_player.SwitchGamemode(_initialGamemode, Gamemodes.None);
 		}

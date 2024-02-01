@@ -2,23 +2,22 @@ using UnityEngine;
 
 namespace Game {
 
-	internal sealed class ShipGamemode : Gamemode, IUpdatable, IPhysicUpdatable {
+	internal sealed class ShipGamemode : Gamemode, IPhysicUpdatable {
 
 		[SerializeField] private float _gravityFactor = 2.93f;
 		[SerializeField] private float _yVelocityLimit = 9.95f;
 
+		private IGamemodeGraphics _shipGraphics;
 		private PlayerData _player;
 
-		internal override void Enable(PlayerData data) {
-			_player = data;
+		internal override void Enable(PlayerData playerData) {
+			_shipGraphics = GetComponent<IGamemodeGraphics>();
+			_shipGraphics.Configure(playerData);
+			_player = playerData;
 		}
 		
 		internal override void Disable() {
 			_player = null;
-		}
-
-		public  void Update() {
-			print("alo");
 		}
 
 		public void UpdatePhysics() {

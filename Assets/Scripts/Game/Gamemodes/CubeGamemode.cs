@@ -2,15 +2,23 @@ using UnityEngine;
 
 namespace Game {
 
-	internal sealed class CubeGamemode : Gamemode {
+	internal sealed class CubeGamemode : Gamemode, IUpdatable {
 
 		[SerializeField] private float _jumpForce = 26.6581f;
-		[SerializeField] private float _rotationFactor = 452.4152186f;
 
+		private IGamemodeGraphics _cubeGraphics;
 		private PlayerData _player;
 
 		internal override void Enable(PlayerData playerData) {
+			if (!TryGetComponent<IGamemodeGraphics>(out var graphics)) {
+				Debug.LogError("Please add graphics to gamemode: " + name);
+				return;
+			}
+
+			_cubeGraphics = graphics;
+			_cubeGraphics.Configure(playerData);
 			_player = playerData;
+
 			PlayerInput.OnMainInputHeld += Jump;
 		}
 
@@ -26,6 +34,8 @@ namespace Game {
 			_player.Body.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
 		}
 
-		
+		public void Update() {
+			_cubeGraphics.UpdateGraphics();
+		}
 	}
 }
