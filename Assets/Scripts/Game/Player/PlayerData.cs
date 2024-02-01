@@ -51,14 +51,16 @@ namespace Game {
 				return;
 			}
 			
-			_previousGamemodeType = previousGamemode;
+			_previousGamemodeType = _currentGamemodeType;
 			_currentGamemodeType = newGamemode;
 
 			CurrentGamemode = _gamemodes[(int) _currentGamemodeType - 1]; // -1 because first gamamode is 1 and we want to access array index 0
 			CurrentGamemode.Enable(playerData: this);
+			Debug.Log($"{_currentGamemodeType} Enabled.");
 
 			if (_previousGamemodeType != Gamemodes.None) { // The first time, previousGamemode will be None
 				CurrentGamemode.Disable();
+				Debug.Log($"{_previousGamemodeType} Disabled.");
 			}
 		}
 

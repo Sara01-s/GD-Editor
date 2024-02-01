@@ -21,6 +21,7 @@ namespace Game {
 		}
 
 		public void UpdatePhysics() {
+			if (_player == null) return;
 			float shipYDirection = PlayerInput.IsMainInputHeld ? -1.0f : 1.0f;
 			float shipGravityScale = _gravityFactor * shipYDirection;
 

@@ -29,7 +29,7 @@ namespace Game {
 
 		public void Jump() {
 			if (!_player.IsGrounded) return;
-
+			print("Jump");
 			_player.Body.velocity = Vector2.zero;
 			_player.Body.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
 		}

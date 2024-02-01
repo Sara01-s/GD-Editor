@@ -11,7 +11,8 @@ namespace Game {
 
 		[SerializeField] private Gamemodes _initialGamemode;
 
-		private void Awake() {
+		private void Start() {
+			QualitySettings.vSyncCount = 1;
 			_playerBody = GetComponent<Rigidbody2D>();
 			_player.Body = _playerBody;
 			_player.Transform = transform;

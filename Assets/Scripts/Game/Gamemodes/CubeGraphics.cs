@@ -7,7 +7,6 @@ namespace Game {
 
 		[SerializeField] private PlayerData _player;
 		[SerializeField] private Sprite _cubeSprite;
-		[SerializeField] private ParticleSystem _groundParticles;
 		[SerializeField] private float _rotationFactor;
 
 		private Vector3 _spriteRotation;
@@ -15,9 +14,7 @@ namespace Game {
 		public void Configure(PlayerData playerData) {
 			_player = playerData;
 			_player.Particles.Value.transform.SetParent(_player.Transform);
-			_player.Particles.Value = _groundParticles;
 			_player.Sprite.Value = _cubeSprite;
-
 		}
 
 		public void UpdateGraphics() {
@@ -27,7 +24,7 @@ namespace Game {
 
 				_player.SpriteTransform.rotation = Quaternion.Euler(_spriteRotation);
 
-				if (!_groundParticles.isPlaying) {
+				if (!_player.Particles.Value.isPlaying) {
 					_player.Particles.Value.Play();
 				}
 				

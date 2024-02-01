@@ -4,7 +4,7 @@ namespace Game {
 
 	internal sealed class PlayerCollision : MonoBehaviour {
 
-		[SerializeField] private PlayerData _data;
+		[SerializeField] private PlayerData _playerData;
 
 		[Space(20.0f)]
 		[SerializeField] private Vector2 _groundCheckPosition;
@@ -12,15 +12,20 @@ namespace Game {
 		[SerializeField] private LayerMask _groundLayer;
 
 		private void Update() {
-			_data.IsGrounded = IsGrounded();
+			_playerData.IsGrounded = IsGrounded();
+		}
+
+		private void OnTriggerEnter2D(Collider2D other) {
+			if (other.TryGetComponent<IInteractable>(out var interactable)) {
+				interactable.Interact(_playerData);
+			}
 		}
 
 		private bool IsGrounded() {
 			var boxScale = Vector2.right * _groundCheckScale.x + Vector2.up * _groundCheckScale.y;
-			return Physics2D.OverlapBox(_data.Position + _groundCheckPosition, boxScale, 0.0f, _groundLayer);
+			return Physics2D.OverlapBox(_playerData.Position + _groundCheckPosition, boxScale, 0.0f, _groundLayer);
 		}
 
-		
 		private void OnDrawGizmosSelected() {
 			Gizmos.color = Color.green;
 
