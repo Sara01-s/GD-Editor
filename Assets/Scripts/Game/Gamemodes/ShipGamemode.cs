@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Game {
 
-	internal sealed class ShipGamemode : Gamemode, IPhysicUpdatable {
+	internal sealed class ShipGamemode : Gamemode, IPhysicUpdatable, IUpdatable {
 
 		[SerializeField] private float _gravityFactor = 2.93f;
 		[SerializeField] private float _yVelocityLimit = 9.95f;
@@ -27,6 +27,9 @@ namespace Game {
 			_player.Body.gravityScale = shipGravityScale;
 			_player.Body.LimitYVelocity(_yVelocityLimit);
 		}
-		
+
+		public void Update() {
+			_shipGraphics.UpdateGraphics();
+		}
 	}
 }

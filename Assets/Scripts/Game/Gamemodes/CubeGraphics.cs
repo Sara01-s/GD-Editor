@@ -14,8 +14,10 @@ namespace Game {
 
 		public void Configure(PlayerData playerData) {
 			_player = playerData;
-			_player.Sprite.Value = _cubeSprite;
+			_player.Particles.Value.transform.SetParent(_player.Transform);
 			_player.Particles.Value = _groundParticles;
+			_player.Sprite.Value = _cubeSprite;
+
 		}
 
 		public void UpdateGraphics() {
@@ -26,7 +28,7 @@ namespace Game {
 				_player.SpriteTransform.rotation = Quaternion.Euler(_spriteRotation);
 
 				if (!_groundParticles.isPlaying) {
-					_groundParticles.Play();
+					_player.Particles.Value.Play();
 				}
 				
 				return;
@@ -34,9 +36,9 @@ namespace Game {
 
 			_player.SpriteTransform.Rotate(_rotationFactor * Time.deltaTime * Vector3.back);
 			
-			if (_groundParticles.isPlaying) {
-				_groundParticles.Clear();
-				_groundParticles.Stop();
+			if (_player.Particles.Value.isPlaying) {
+				_player.Particles.Value.Clear();
+				_player.Particles.Value.Stop();
 			}
 		}
 

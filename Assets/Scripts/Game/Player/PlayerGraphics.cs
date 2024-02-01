@@ -8,8 +8,12 @@ namespace Game {
 		[SerializeField] private SpriteRenderer _spriteRenderer;
 		[SerializeField] private ParticleSystem _particles;
 
-		private void OnEnable() {
+		private void Awake() {
 			_player.SpriteTransform = _spriteRenderer.transform;
+			_player.Particles.Value = _particles;
+		}
+
+		private void OnEnable() {
 			_player.Sprite.Suscribe(UpdateSprite);
 			_player.Particles.Suscribe(UpdateParticles);
 		}
