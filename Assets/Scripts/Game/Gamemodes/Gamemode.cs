@@ -1,6 +1,15 @@
+using UnityEngine;
+
 namespace Game {
 
-	internal abstract class Gamemode : UnityEngine.MonoBehaviour {
+	internal enum GamemodeType {
+		None = 0, Cube = 1, Ship = 2
+	}
+
+	internal abstract class Gamemode : MonoBehaviour {
+
+		[Tooltip("-1 means Freecam")]
+		[SerializeField] internal float MaxScreenHeight;
 
 		internal abstract void Enable(PlayerData playerData);
 		internal abstract void Disable();

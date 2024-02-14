@@ -1,11 +1,10 @@
+using System.Collections.Generic;
 using System;
 
 namespace Game {
 
-	internal sealed class ReactiveValue<T> {
-
-		private event Action<T> OnValueChanged;
-
+	internal sealed class ReactiveValue<T> : IDisposable {
+		
 		internal T Value {
 			get => _value;
 			set {
@@ -14,13 +13,21 @@ namespace Game {
 			}
 		}
 
+		private event Action<T> OnValueChanged;
 		private T _value;
+		private readonly List<Action<T>> _callbacks = new();
 
-		internal void Suscribe(Action<T> action) {
-			OnValueChanged += action;
+		internal void Suscribe(Action<T> valueChangedCallback) {
+			OnValueChanged += valueChangedCallback;
+			_callbacks.Add(valueChangedCallback);
 		}
 
-		internal void Dispose() {
+		public void Dispose() {
+			foreach (var action in _callbacks) {
+				OnValueChanged -= action;
+			}
+
+			_callbacks.Clear();
 			OnValueChanged = null;
 		}
 

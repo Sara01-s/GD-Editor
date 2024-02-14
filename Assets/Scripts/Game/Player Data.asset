@@ -16,9 +16,10 @@ MonoBehaviour:
   - {fileID: 8193688630697462524, guid: 84c2281af0ac9c94f8ec53c4e08e25cb, type: 3}
   - {fileID: 4050528564607216415, guid: ac3facd04306ca24787921eb6534389f, type: 3}
   Transform: {fileID: 0}
-  CurrentGamemode: {fileID: 4050528564607216415, guid: ac3facd04306ca24787921eb6534389f, type: 3}
-  Position: {x: 11.4959755, y: -6.2682867}
-  SpeedType: 0
+  CurrentGamemode: {fileID: 8193688630697462524, guid: 84c2281af0ac9c94f8ec53c4e08e25cb, type: 3}
+  PreviousGamemode: {fileID: 8193688630697462524, guid: 84c2281af0ac9c94f8ec53c4e08e25cb, type: 3}
+  Position: {x: -10.99, y: -6.2682867}
+  SpeedType: 1
   IsGrounded: 1
   MaxYSpeed: -24.2
   Body: {fileID: 0}

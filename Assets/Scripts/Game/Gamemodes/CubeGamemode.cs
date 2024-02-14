@@ -23,8 +23,8 @@ namespace Game {
 		}
 
 		internal override void Disable() {
-			_player = null;
 			PlayerInput.OnMainInputHeld -= Jump;
+			_player = null;
 		}
 
 		public void Jump() {

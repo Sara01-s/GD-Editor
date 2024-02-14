@@ -16,11 +16,19 @@ namespace Game {
 		private void OnEnable() {
 			_player.Sprite.Suscribe(UpdateSprite);
 			_player.Particles.Suscribe(UpdateParticles);
+			_player.OnDeath += DisableGraphics;
 		}
 
 		private void OnDisable() {
 			_player.Sprite.Dispose();
 			_player.Particles.Dispose();
+			_player.OnDeath -= DisableGraphics;
+		}
+
+		private void DisableGraphics() {
+			_spriteRenderer.enabled = false;
+			_particles.Clear();
+			_particles.Stop();
 		}
 
 		private void UpdateSprite(Sprite sprite) {
