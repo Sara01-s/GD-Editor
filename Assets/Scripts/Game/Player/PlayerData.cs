@@ -15,7 +15,7 @@ namespace Game {
 		public ReactiveValue<Sprite> Sprite = new();
 		public ReactiveValue<ParticleSystem> Particles = new();
 
-		public float SpeedValue {
+		public float Speed {
 			get => _speedValues[(int) SpeedType];
 		}
 

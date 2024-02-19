@@ -20,7 +20,7 @@ namespace Game {
 			_player = null;
 		}
 
-		public void UpdatePhysics() {
+		public void PhysicsUpdate() {
 			if (_player == null) return;
 			float shipYDirection = PlayerInput.IsMainInputHeld ? -1.0f : 1.0f;
 			float shipGravityScale = _gravityFactor * shipYDirection;

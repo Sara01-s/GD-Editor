@@ -48,8 +48,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 179ef50c1158b024db087b757bd8faad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxScreenHeight: 0
-  _jumpForce: 26.6581
+  MaxScreenHeight: -1
+  _showScreenHeightGizmo: 0
+  _jumpHeight: 2.5
+  _secondsToJumpPeak: 0.21
+  _secondsToLand: 0.21
 --- !u!114 &2591055868326664013
 MonoBehaviour:
   m_ObjectHideFlags: 0

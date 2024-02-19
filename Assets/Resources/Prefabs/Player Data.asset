@@ -12,16 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1997afc7bd5c46478ce35871fbdbce3, type: 3}
   m_Name: Player Data
   m_EditorClassIdentifier: 
-  _gamemodes:
-  - {fileID: 8193688630697462524, guid: 84c2281af0ac9c94f8ec53c4e08e25cb, type: 3}
-  - {fileID: 4050528564607216415, guid: ac3facd04306ca24787921eb6534389f, type: 3}
   Transform: {fileID: 0}
   CurrentGamemode: {fileID: 8193688630697462524, guid: 84c2281af0ac9c94f8ec53c4e08e25cb, type: 3}
   PreviousGamemode: {fileID: 8193688630697462524, guid: 84c2281af0ac9c94f8ec53c4e08e25cb, type: 3}
-  Position: {x: -10.99, y: -6.2682867}
-  SpeedType: 1
-  IsGrounded: 1
+  Position: {x: 37.54256, y: -3.9350686}
+  SpeedType: 2
+  IsGrounded: 0
   MaxYSpeed: -24.2
+  LastPortalY: -1.4
   Body: {fileID: 0}
   SpriteTransform: {fileID: 0}
   Primary: {r: 0.9056604, g: 0.8420123, b: 0.5416874, a: 1}

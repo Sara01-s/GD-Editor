@@ -9,14 +9,12 @@ namespace Game {
 		[SerializeField] private PlayerData _player;
 		[Space(20.0f)] private Rigidbody2D _playerBody;
 
-		[SerializeField] private GamemodeType _initialGamemode;
-
 		private bool _movementStopped;
 
 		private void Start() {
-			QualitySettings.vSyncCount = 1;
 			_playerBody = GetComponent<Rigidbody2D>();
 			_player.Body = _playerBody;
+			_player.Body.isKinematic = false;
 			_player.Transform = transform;
 		}
 
@@ -30,7 +28,9 @@ namespace Game {
 
 		private void FixedUpdate() {
 			if (_player.CurrentGamemode is IPhysicUpdatable gamemode) {
-				gamemode.UpdatePhysics();
+				if (_movementStopped) return;
+				
+				gamemode.PhysicsUpdate();
 			}
 		}
 
@@ -42,7 +42,7 @@ namespace Game {
 			_playerBody.velocity = new Vector2(_playerBody.velocity.x, clampedYSpeed);
 			_player.Position = transform.position;
 
-			transform.position += _player.SpeedValue * Time.deltaTime * Vector3.right;
+			transform.position += _player.Speed * Time.deltaTime * Vector3.right;
 
 			if (_player.CurrentGamemode is IUpdatable gamemode) {
 				gamemode.Update();
@@ -54,6 +54,12 @@ namespace Game {
 			_player.Body.velocity = Vector2.zero;
 			_player.Body.gravityScale = 0.0f;
 			_player.Body.isKinematic = true;
+		}
+
+		private void LateUpdate() {
+			if (_player.CurrentGamemode is ILateUpdatable gamemode) {
+				gamemode.LateUpdate();
+			}
 		}
 		
 	}

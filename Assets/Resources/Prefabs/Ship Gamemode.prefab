@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 169d781d0bf1ea344ae6700fb5f5ee70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxScreenHeight: 10
+  _showScreenHeightGizmo: 1
   _gravityFactor: 2.93
   _yVelocityLimit: 9.95
 --- !u!114 &-3777253770297251254
@@ -65,7 +67,6 @@ MonoBehaviour:
   _player: {fileID: 11400000, guid: ed374bb9b09ae81408dbe20c55867da2, type: 2}
   _rotationFactor: 1.5
   _shipSprite: {fileID: 21300000, guid: 79f26a8c560494943a2e79a09fc5a6a7, type: 3}
-  _shipParticles: {fileID: -8988480986387806964}
 --- !u!50 &-2663781011434270865
 Rigidbody2D:
   serializedVersion: 4

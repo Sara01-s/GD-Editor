@@ -8,6 +8,7 @@ namespace Game {
 
 		[SerializeField] private PlayerData _playerData;
 		[SerializeField] private GameObject _vfxDeath;
+		
 		private PlayerCollision _playerCollision;
 
 		private void Awake() {
@@ -27,7 +28,6 @@ namespace Game {
 		}
 
 		internal void KillPlayer() {
-
 			print("Player dead");
 			_playerData.OnDeath?.Invoke();
 			
@@ -35,8 +35,6 @@ namespace Game {
 			float vfxDuration = vfx.GetComponent<ParticleSystem>().main.duration;
 
 			Invoke(nameof(ReloadScene), vfxDuration);
-
-			
 		}
 
 		private void ReloadScene() {
