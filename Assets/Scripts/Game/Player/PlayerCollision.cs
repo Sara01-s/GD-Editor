@@ -78,7 +78,6 @@ namespace Game {
 			Gizmos.color = Color.cyan;
 			var upBox = Vector2.right * _upCheckPosition.x + Vector2.up * _upCheckPosition.y;
 			Gizmos.DrawWireCube((Vector2)transform.position + _upCheckPosition, upBox);
-
 		}
 
 	}

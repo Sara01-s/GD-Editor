@@ -8,24 +8,29 @@ namespace Game {
 		[SerializeField] private bool _followX;
 		[SerializeField] private bool _followY;
 
+		private Vector3 _startPosition;
+
+		private void Start() {
+			_startPosition = transform.position;
+		}
+
 		private void LateUpdate() {
-			if (!_followX && !_followY) return;
+			if (_target == null) {
+				Debug.LogError("Please assign a target to follow.");
+				return;
+			}
+
+			var newPosition = transform.position;
 
 			if (_followX) {
-				FollowPosition(new Vector3(_target.position.x, transform.position.y, _target.position.z));
-				return;
+				newPosition.x = _startPosition.x + (_target.position.x - _startPosition.x);
 			}
 
 			if (_followY) {
-				FollowPosition(new Vector3(transform.position.x, _target.position.y, _target.position.z));
-				return;
+				newPosition.y = _startPosition.y + (_target.position.y - _startPosition.y);
 			}
 
-			FollowPosition(_target.position);
-		}
-
-		private void FollowPosition(Vector3 position) {
-			transform.position = position;
+			transform.position = newPosition;
 		}
 
 	}

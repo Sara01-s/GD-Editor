@@ -13,30 +13,21 @@ namespace Game {
 
 		public void Configure(PlayerData playerData) {
 			_player = playerData;
-			_player.Particles.Value.transform.SetParent(_player.Transform);
 			_player.Sprite.Value = _cubeSprite;
 		}
 
 		public void UpdateGraphics() {
 			if (_player.IsGrounded) {
-				_spriteRotation = _player.SpriteTransform.rotation.eulerAngles;
+				_spriteRotation = _player.CubeIcon.transform.rotation.eulerAngles;
 				_spriteRotation.z = round(_spriteRotation.z / 90.0f) * 90.0f;
 
-				_player.SpriteTransform.rotation = Quaternion.Euler(_spriteRotation);
-
-				if (!_player.Particles.Value.isPlaying) {
-					_player.Particles.Value.Play();
-				}
-				
+				_player.CubeIcon.transform.rotation = Quaternion.Euler(_spriteRotation);
+				_player.CubeIcon.ShowParticles();
 				return;
 			}
 
-			_player.SpriteTransform.Rotate(_rotationFactor * Time.deltaTime * Vector3.back);
-			
-			if (_player.Particles.Value.isPlaying) {
-				_player.Particles.Value.Clear();
-				_player.Particles.Value.Stop();
-			}
+			_player.CubeIcon.transform.Rotate(_rotationFactor * Time.deltaTime * Vector3.back);
+			_player.CubeIcon.HideParticles();
 		}
 
 	}

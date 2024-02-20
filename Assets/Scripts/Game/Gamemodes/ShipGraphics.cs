@@ -10,13 +10,12 @@ namespace Game {
 
 		public void Configure(PlayerData playerData) {
 			_player = playerData;
-			_player.Particles.Value.transform.SetParent(_player.SpriteTransform);
 			_player.Sprite.Value = _shipSprite;
 		}
 
 		public void UpdateGraphics() {
 			var shipRotation = Quaternion.AngleAxis(_player.Body.velocity.y * _rotationFactor, Vector3.forward);
-			_player.SpriteTransform.rotation = shipRotation;
+			_player.ShipIcon.transform.rotation = shipRotation;
 		}
 
 	}

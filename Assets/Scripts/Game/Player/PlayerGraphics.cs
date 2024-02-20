@@ -5,39 +5,33 @@ namespace Game {
 	internal sealed class PlayerGraphics : MonoBehaviour {
 
 		[SerializeField] private PlayerData _player;
-		[SerializeField] private SpriteRenderer _spriteRenderer;
-		[SerializeField] private ParticleSystem _particles;
+		[SerializeField] private Transform _iconPivot;
+
+		private Icon _serializedCubeIcon;
 
 		private void Awake() {
-			_player.SpriteTransform = _spriteRenderer.transform;
-			_player.Particles.Value = _particles;
+			SpawnIcon();
 		}
 
 		private void OnEnable() {
-			_player.Sprite.Suscribe(UpdateSprite);
-			_player.Particles.Suscribe(UpdateParticles);
 			_player.OnDeath += DisableGraphics;
 		}
 
 		private void OnDisable() {
-			_player.Sprite.Dispose();
-			_player.Particles.Dispose();
 			_player.OnDeath -= DisableGraphics;
+			_player.CubeIcon = _serializedCubeIcon;
+		}
+
+		private void SpawnIcon() {
+			_serializedCubeIcon = _player.CubeIcon;
+			_player.CubeIcon = Instantiate(_player.CubeIcon, _iconPivot);
+			_player.CubeIcon.SetColors(_player.PrimaryColor, _player.SecondaryColor, _player.UseGlow, _player.GlowColor);
 		}
 
 		private void DisableGraphics() {
-			_spriteRenderer.enabled = false;
-			_particles.Clear();
-			_particles.Stop();
-		}
-
-		private void UpdateSprite(Sprite sprite) {
-			_spriteRenderer.sprite = sprite;
-			_spriteRenderer.color = _player.Primary;
-		}
-
-		private void UpdateParticles(ParticleSystem particles) {
-			_particles = particles;
+			_player.CubeIcon.PlayDeathEffect();
+			_player.CubeIcon.HideIcon();
+			_player.CubeIcon.HideParticles();
 		}
 
 	}

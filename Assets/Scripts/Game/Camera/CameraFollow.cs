@@ -5,6 +5,7 @@ namespace Game {
 
 	internal sealed class CameraFollow : MonoBehaviour {
 
+		[SerializeField] private PlayerData _playerData;
 		[SerializeField] private Transform _targetToFollow;
 		[SerializeField] private Vector3 _cameraOffset;
 		[SerializeField] private float _maxCameraY;
@@ -25,11 +26,12 @@ namespace Game {
 			_transformPuppetPosition = transform.position;
 		}
 
-		private void LateUpdate() {
+		private void FixedUpdate() {
 			FollowTarget();
 		}
 
 		private void FollowTarget() {
+			if (_playerData.IsDead) return;
 			// La cámara NO debe seguir al jugador en Y
 			
 			var finalPosition = _transformPuppetPosition;

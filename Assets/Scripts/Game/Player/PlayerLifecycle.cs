@@ -7,12 +7,12 @@ namespace Game {
 	internal sealed class PlayerLifecycle : MonoBehaviour {
 
 		[SerializeField] private PlayerData _playerData;
-		[SerializeField] private GameObject _vfxDeath;
 		
 		private PlayerCollision _playerCollision;
 
 		private void Awake() {
 			_playerCollision = GetComponent<PlayerCollision>();
+			_playerData.IsDead = false;
 		}
 
 		private void OnEnable() {
@@ -28,13 +28,17 @@ namespace Game {
 		}
 
 		internal void KillPlayer() {
-			print("Player dead");
 			_playerData.OnDeath?.Invoke();
-			
-			var vfx = Instantiate(_vfxDeath, transform);
-			float vfxDuration = vfx.GetComponent<ParticleSystem>().main.duration;
+			_playerData.IsDead = true;
 
-			Invoke(nameof(ReloadScene), vfxDuration);
+			Invoke(nameof(ReloadScene), time: 1.0f);
+		}
+
+		// FIXME - Debug, remember to remove this lol
+		private void Update() {
+			if (Input.GetKeyDown(KeyCode.R)) {
+				ReloadScene();
+			}
 		}
 
 		private void ReloadScene() {

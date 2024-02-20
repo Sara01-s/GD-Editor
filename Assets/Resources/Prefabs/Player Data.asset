@@ -15,12 +15,16 @@ MonoBehaviour:
   Transform: {fileID: 0}
   CurrentGamemode: {fileID: 8193688630697462524, guid: 84c2281af0ac9c94f8ec53c4e08e25cb, type: 3}
   PreviousGamemode: {fileID: 8193688630697462524, guid: 84c2281af0ac9c94f8ec53c4e08e25cb, type: 3}
-  Position: {x: 37.54256, y: -3.9350686}
+  Position: {x: -10.801996, y: -4.6951184}
   SpeedType: 2
-  IsGrounded: 0
+  IsGrounded: 1
   MaxYSpeed: -24.2
   LastPortalY: -1.4
+  IsDead: 0
   Body: {fileID: 0}
-  SpriteTransform: {fileID: 0}
-  Primary: {r: 0.9056604, g: 0.8420123, b: 0.5416874, a: 1}
-  Secondary: {r: 0, g: 0, b: 0, a: 0}
+  PrimaryColor: {r: 0.43921572, g: 0.3647059, b: 0.5686275, a: 1}
+  SecondaryColor: {r: 0.92549026, g: 0.03529412, b: 0.54509807, a: 1}
+  UseGlow: 1
+  GlowColor: {r: 1, g: 1, b: 1, a: 1}
+  CubeIcon: {fileID: 1434369515653996044, guid: cad6c82ebaef28244ab501949fdcd618, type: 3}
+  ShipIcon: {fileID: 0}
