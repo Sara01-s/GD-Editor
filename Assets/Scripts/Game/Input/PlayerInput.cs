@@ -7,6 +7,7 @@ namespace Game {
 	internal sealed class PlayerInput : MonoBehaviour, InputMap.IGameplayActions {
 
 		internal static Action OnMainInputHeld;
+		internal static Action OnMainInputPressed;
 		internal static Action OnMainInputReleased;
 		internal static Action OnEscInputPressed;
 
@@ -41,6 +42,10 @@ namespace Game {
 		}
 
 		public void OnMainInput(InputAction.CallbackContext context) {
+			if (context.started) {
+				OnMainInputPressed?.Invoke();
+			}
+			
 			if (context.canceled) {
 				OnMainInputReleased?.Invoke();
 			}

@@ -1,4 +1,3 @@
-using static Unity.Mathematics.math;
 using System.Collections;
 using UnityEngine;
 
@@ -11,6 +10,8 @@ namespace Game {
 		[SerializeField] private SpriteRenderer _secondarySpriteRenderer;
 		[SerializeField] private SpriteRenderer _glowSpriteRenderer;
 		[SerializeField] private ParticleSystem _iconParticles;
+		[SerializeField] private bool _particlesFollowIcon;
+		[SerializeField] private ParticleSystem _respawnParticles;
 
 		[Header("Life Cycle")]
 		[SerializeField] private GameObject _deathEffect;
@@ -18,10 +19,6 @@ namespace Game {
 		[SerializeField, Min(0.0f)] private float _blinkDuration = 0.05f;
 
 		private bool _useGlow;
-
-		private void Awake() {
-			StartCoroutine(_Blink(_blinksOnSpawn));
-		}
 
 		private void SetIconColors(Color primary, Color secondary) {
 			_primarySpriteRenderer.color = primary;
@@ -59,9 +56,13 @@ namespace Game {
 			});
 		}
 
-		private void ConfigureParticles(Color effectsColor) {
-			_iconParticles.transform.SetParent(transform.parent);
-			SetParticlesColor(effectsColor);
+		private void ConfigureParticles(Color color) {
+			if (!_particlesFollowIcon) {
+				_iconParticles.transform.SetParent(transform.parent);
+			}
+
+			SetRespawnParticlesColor(color);
+			SetIconParticlesColor(color);
 		}
 
 		internal void SetColors(Color primary, Color secondary, bool useGlow, Color glowColor = default) {
@@ -73,6 +74,12 @@ namespace Game {
 
 		internal void PlayDeathEffect() {
 			Instantiate(_deathEffect, transform);
+		}
+
+		internal void PlaySpawnEffect() {
+			if (!_respawnParticles.isPlaying) {
+				_respawnParticles.Play();
+			}
 		}
 
 		internal void ShowIcon() {
@@ -89,19 +96,26 @@ namespace Game {
 
 		internal void ShowParticles() {
 			if (!_iconParticles.isPlaying) {
+				print("activado");
 				_iconParticles.Play();
 			}
 		}
 
 		internal void HideParticles() {
 			if (_iconParticles.isPlaying) {
+				print("desactivado");
 				_iconParticles.Clear();
-				_iconParticles.Stop();
+				_iconParticles.Stop(withChildren: true, ParticleSystemStopBehavior.StopEmittingAndClear);
 			}
 		}
 
+		private void SetRespawnParticlesColor(Color color) {
+			var particlesColor = _respawnParticles.main.startColor;
+			particlesColor.color = new Color(color.r, color.b, color.g, 0.5f);
+		}
+
 		// ref: https://docs.unity3d.com/ScriptReference/ParticleSystem-colorOverLifetime.html
-		private void SetParticlesColor(Color color) {
+		private void SetIconParticlesColor(Color color) {
 			var colorOverLifetime = _iconParticles.colorOverLifetime;
 			colorOverLifetime.enabled = true;
 
@@ -114,18 +128,21 @@ namespace Game {
 			var gradientAlphaKeys  = new GradientAlphaKey[] { gradientStartAlpha, gradientEndAlpha};
 			
 			gradient.SetKeys(gradientColorKeys, gradientAlphaKeys);
-
 			colorOverLifetime.color = gradient;
 		}
 
-		private IEnumerator _Blink(int repeatCount) {
-			for (int i = 0; i < repeatCount; i++) {
-				HideIcon();
-				yield return new WaitForSeconds(_blinkDuration);
-				ShowIcon();
-				yield return new WaitForSeconds(_blinkDuration);
+		internal void Blink() {
+			StartCoroutine(_Blink(_blinksOnSpawn));
+
+			IEnumerator _Blink(int repeatCount) {
+				for (int i = 0; i < repeatCount; i++) {
+					HideIcon();
+					yield return new WaitForSeconds(_blinkDuration);
+					ShowIcon();
+					yield return new WaitForSeconds(_blinkDuration);
+				}
 			}
 		}
-		
+
 	}
 }

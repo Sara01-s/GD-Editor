@@ -13,14 +13,16 @@ namespace Game {
 			_playerBody = GetComponent<Rigidbody2D>();
 			_player.Body = _playerBody;
 			_player.Transform = transform;
+
+			ChangePlayerSpeed(_player.SpeedType);
 		}
 
-		private void OnEnable() {
-			_player.OnDeath += StopPlayer;
+		public void ChangePlayerSpeed(SpeedType newSpeed) {
+			_player.SpeedType = newSpeed;
 		}
 
-		private void OnDisable() {
-			_player.OnDeath -= StopPlayer;
+		public void StopMovement() {
+			_player.Body.velocity = Vector2.zero;
 		}
 
 		private void FixedUpdate() {
@@ -30,10 +32,10 @@ namespace Game {
 				gamemode.PhysicsUpdate();
 			}
 
-			float clampedYSpeed = max(-24.2f, _playerBody.velocity.y);
-
-			_player.Body.velocity = new Vector2(_playerBody.velocity.x, clampedYSpeed);
 			_player.Position = transform.position;
+
+			float clampedYSpeed = max(-24.2f, _playerBody.velocity.y);
+			_player.Body.velocity = new Vector2(_playerBody.velocity.x, clampedYSpeed);
 
 			transform.position += _player.Speed * Time.deltaTime * Vector3.right;
 		}
@@ -44,11 +46,6 @@ namespace Game {
 			if (_player.CurrentGamemode is IUpdatable gamemode) {
 				gamemode.Update();
 			}
-		}
-
-		private void StopPlayer() {
-			_player.Body.velocity = Vector2.zero;
-			_player.Body.gravityScale = 0.0f;
 		}
 
 		private void LateUpdate() {

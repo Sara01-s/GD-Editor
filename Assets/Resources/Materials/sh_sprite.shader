@@ -11,6 +11,7 @@ Shader "Custom/Unlit/sh_sprite" {
             "RenderType"="Opaque"
         }
         LOD 100
+		Blend SrcAlpha OneMinusSrcAlpha
 
         Pass {
             CGPROGRAM

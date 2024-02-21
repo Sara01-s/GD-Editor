@@ -6,16 +6,14 @@ namespace Game {
 
 		[SerializeField] private PlayerData _player;
 		[SerializeField] private float _rotationFactor;
-		[SerializeField] private Sprite _shipSprite;
 
 		public void Configure(PlayerData playerData) {
 			_player = playerData;
-			_player.Sprite.Value = _shipSprite;
 		}
 
 		public void UpdateGraphics() {
 			var shipRotation = Quaternion.AngleAxis(_player.Body.velocity.y * _rotationFactor, Vector3.forward);
-			_player.ShipIcon.transform.rotation = shipRotation;
+			_player.Icon.transform.rotation = shipRotation;
 		}
 
 	}

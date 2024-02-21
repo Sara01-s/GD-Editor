@@ -6,18 +6,9 @@ namespace Game {
 	internal sealed class CameraShake : MonoBehaviour {
 
 		[SerializeField] private AnimationCurve _shakeCurve;
-		[SerializeField] private PlayerData _playerData;
 		[SerializeField] private float _shakeDuration;
 
-		private void OnEnable() {
-			_playerData.OnDeath += Shake;
-		}
-
-		private void OnDisable() {
-			_playerData.OnDeath -= Shake;
-		}
-
-		private void Shake() {
+		public void Shake() {
 			StartCoroutine(_Shake());
 		}
 

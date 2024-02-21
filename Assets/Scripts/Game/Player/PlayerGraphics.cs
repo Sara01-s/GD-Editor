@@ -13,25 +13,29 @@ namespace Game {
 			SpawnIcon();
 		}
 
-		private void OnEnable() {
-			_player.OnDeath += DisableGraphics;
-		}
-
 		private void OnDisable() {
-			_player.OnDeath -= DisableGraphics;
-			_player.CubeIcon = _serializedCubeIcon;
+			_player.Icon = _serializedCubeIcon;
 		}
 
 		private void SpawnIcon() {
-			_serializedCubeIcon = _player.CubeIcon;
-			_player.CubeIcon = Instantiate(_player.CubeIcon, _iconPivot);
-			_player.CubeIcon.SetColors(_player.PrimaryColor, _player.SecondaryColor, _player.UseGlow, _player.GlowColor);
+			_serializedCubeIcon = _player.Icon;
+
+			_player.Icon = Instantiate(_player.Icon, _iconPivot);
+			_player.Icon.Blink();
+			_player.Icon.PlaySpawnEffect();
+			_player.Icon.SetColors(_player.PrimaryColor, _player.SecondaryColor, _player.UseGlow, _player.GlowColor);
 		}
 
-		private void DisableGraphics() {
-			_player.CubeIcon.PlayDeathEffect();
-			_player.CubeIcon.HideIcon();
-			_player.CubeIcon.HideParticles();
+		public void RespawnIcon() {
+			_player.Icon.transform.rotation = Quaternion.identity;
+			_player.Icon.Blink();
+			_player.Icon.PlaySpawnEffect();
+		}
+
+		public void DisableIcon() {
+			_player.Icon.HideParticles();
+			_player.Icon.PlayDeathEffect();
+			_player.Icon.HideIcon();
 		}
 
 	}

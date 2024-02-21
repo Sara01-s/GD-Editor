@@ -5,13 +5,13 @@ namespace Game {
 
 	internal sealed class CameraFollow : MonoBehaviour {
 
-		[SerializeField] private PlayerData _playerData;
 		[SerializeField] private Transform _targetToFollow;
 		[SerializeField] private Vector3 _cameraOffset;
 		[SerializeField] private float _maxCameraY;
 		[SerializeField] private float _minCameraY;
 		[SerializeField] private float _upDeadzoneThreshold;
 		[SerializeField] private float _downDeadzoneThreshold;
+		[SerializeField] private float _startFollowThreshold;
 		[SerializeField, Min(0.0f)] private float _followYSpeed;
 
 		[Space(20.0f)]
@@ -19,19 +19,40 @@ namespace Game {
 		[SerializeField] private bool _showCameraGuides;
 
 		private Vector3 _transformPuppetPosition;
+		private Vector3 _startPosition;
+		private bool _canFollow;
 		private Camera _camera;
 
 		private void Awake() {
 			_camera = GetComponent<Camera>();
 			_transformPuppetPosition = transform.position;
+			_startPosition = transform.position;
+		}
+
+		private void Update() {
+			if (_targetToFollow.position.x > transform.position.x + _startFollowThreshold && !_canFollow) {
+				_canFollow = true;
+			}
 		}
 
 		private void FixedUpdate() {
 			FollowTarget();
 		}
 
+		public void TeleportCameraToTarget() {
+			transform.position = _startPosition;
+		}
+		
+		public void EnableFollow() {
+			_canFollow = true;
+		}
+		
+		public void DisableFollow() {
+			_canFollow = false;
+		}
+
 		private void FollowTarget() {
-			if (_playerData.IsDead) return;
+			if (!_canFollow) return;
 			// La cámara NO debe seguir al jugador en Y
 			
 			var finalPosition = _transformPuppetPosition;
@@ -99,6 +120,10 @@ namespace Game {
 			Gizmos.DrawCube(upDeadzonePosition, new Vector2(20.0f, 0.1f));
 			Gizmos.color = Color.blue;
 			Gizmos.DrawCube(downDeadzonePosition, new Vector2(20.0f, 0.1f));
+
+			Gizmos.color = Color.cyan;
+			var startFollowThreshold = new Vector3(_startFollowThreshold, transform.position.y);
+			Gizmos.DrawCube(transform.position + startFollowThreshold, new Vector3(0.1f, 20.0f));
 		}
 
 	}

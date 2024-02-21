@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game {
 
-	internal sealed class CubeGamemode : Gamemode, IPhysicUpdatable, ILateUpdatable {
+	internal sealed class CubeGamemode : Gamemode, IPhysicUpdatable, IUpdatable {
 
 		[SerializeField, Min(0.0f)] private float _jumpHeight;
 		[SerializeField, Min(0.0f)] private float _secondsToJumpPeak;
@@ -13,20 +13,20 @@ namespace Game {
 		private float _jumpGravity;
 		private float _fallGravity;
 
-		private IGamemodeGraphics _cubeGraphics;
+		private CubeGraphics _cubeGraphics;
 		private PlayerData _player;
 
 		internal override void Enable(PlayerData playerData) {
-			if (!TryGetComponent<IGamemodeGraphics>(out var graphics)) {
+			if (!TryGetComponent(out _cubeGraphics)) {
 				Debug.LogError("Please add graphics to gamemode: " + name);
 				return;
 			}
 
-			_cubeGraphics = graphics;
 			_cubeGraphics.Configure(playerData);
 			_player = playerData;
 
 			PlayerInput.OnMainInputHeld += Jump;
+			PlayerInput.OnMainInputPressed += HideGroundParticles;
 
 			_jumpVelocity =  2.0f * _jumpHeight / _secondsToJumpPeak;
 			_jumpGravity  = -2.0f * _jumpHeight / pow(_secondsToJumpPeak, 2.0f);
@@ -35,9 +35,10 @@ namespace Game {
 
 		internal override void Disable() {
 			PlayerInput.OnMainInputHeld -= Jump;
+			PlayerInput.OnMainInputPressed -= HideGroundParticles;
 		}
 
-		public void LateUpdate() {
+		public void Update() {
 			_cubeGraphics.UpdateGraphics();
 		}
 
@@ -48,6 +49,10 @@ namespace Game {
 
 		private float GetJumpGravity() {
 			return _player.Body.velocity.y > 0.0f ? _jumpGravity : _fallGravity;
+		}
+
+		private void HideGroundParticles() {
+			_cubeGraphics.HideGroundParticles();
 		}
 
 		private void Jump() {

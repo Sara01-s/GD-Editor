@@ -1,4 +1,3 @@
-using UnityEngine.SceneManagement;
 using UnityEngine;
 
 namespace Game {
@@ -7,11 +6,15 @@ namespace Game {
 	internal sealed class PlayerLifecycle : MonoBehaviour {
 
 		[SerializeField] private PlayerData _playerData;
+		[SerializeField] private GameEvent _onPlayerDeath;
+		[SerializeField] private GameEvent _onPlayerRespawn;
 		
 		private PlayerCollision _playerCollision;
+		private Vector3 _spawnPosition;
 
 		private void Awake() {
 			_playerCollision = GetComponent<PlayerCollision>();
+			_spawnPosition = transform.position;
 			_playerData.IsDead = false;
 		}
 
@@ -28,21 +31,23 @@ namespace Game {
 		}
 
 		internal void KillPlayer() {
-			_playerData.OnDeath?.Invoke();
+			_onPlayerDeath.Raise();
 			_playerData.IsDead = true;
 
-			Invoke(nameof(ReloadScene), time: 1.0f);
+			Invoke(nameof(RespawnPlayer), time: 1.0f);
 		}
 
 		// FIXME - Debug, remember to remove this lol
 		private void Update() {
 			if (Input.GetKeyDown(KeyCode.R)) {
-				ReloadScene();
+				RespawnPlayer();
 			}
 		}
 
-		private void ReloadScene() {
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		private void RespawnPlayer() {
+			_playerData.Transform.position = _spawnPosition;
+			_playerData.IsDead = false;
+			_onPlayerRespawn.Raise();
 		}
 
 		public void CompleteLevel() {
