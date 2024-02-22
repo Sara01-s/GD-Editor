@@ -26,7 +26,6 @@ namespace Game {
 			_player = playerData;
 
 			PlayerInput.OnMainInputHeld += Jump;
-			PlayerInput.OnMainInputPressed += HideGroundParticles;
 
 			_jumpVelocity =  2.0f * _jumpHeight / _secondsToJumpPeak;
 			_jumpGravity  = -2.0f * _jumpHeight / pow(_secondsToJumpPeak, 2.0f);
@@ -35,7 +34,6 @@ namespace Game {
 
 		internal override void Disable() {
 			PlayerInput.OnMainInputHeld -= Jump;
-			PlayerInput.OnMainInputPressed -= HideGroundParticles;
 		}
 
 		public void Update() {
@@ -49,10 +47,6 @@ namespace Game {
 
 		private float GetJumpGravity() {
 			return _player.Body.velocity.y > 0.0f ? _jumpGravity : _fallGravity;
-		}
-
-		private void HideGroundParticles() {
-			_cubeGraphics.HideGroundParticles();
 		}
 
 		private void Jump() {

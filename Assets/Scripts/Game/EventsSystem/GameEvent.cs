@@ -5,7 +5,6 @@ namespace Game {
 
 	[CreateAssetMenu(menuName = "Events/New Game Event")]
 	internal sealed class GameEvent : ScriptableObject {
-
 		public List<GameEventListener> Listeners = new();
 		
 		internal void Raise() {

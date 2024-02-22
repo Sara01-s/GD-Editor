@@ -8,9 +8,9 @@ namespace Game {
 		internal event Action OnSideCollision;
 		internal event Action OnUpCollision;
 		internal event Action OnHazardCollision;
-		internal event Action OnLand;
 
 		[SerializeField] private PlayerData _playerData;
+		[SerializeField] private GameEvent _onPlayerLand;
 
 		[Space(20.0f)]
 		[SerializeField] private Vector2 _groundCheckPosition;
@@ -60,7 +60,7 @@ namespace Game {
 		private void CheckIfLanded() {
 			if (_playerData.IsGrounded != _wasGroundedLastFrame) {
 				if (_playerData.IsGrounded) {
-					OnLand?.Invoke();
+					_onPlayerLand.Raise();
 				}
 			}
 

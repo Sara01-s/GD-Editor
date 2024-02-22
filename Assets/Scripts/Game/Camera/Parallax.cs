@@ -7,7 +7,7 @@ namespace Game {
 
 		[SerializeField] private Transform _referenceTarget;
 		[SerializeField] private Material _material;
-		[SerializeField, Range(0.0f, 1.0f)] private float _speedMultiplier;
+		[SerializeField] private Vector3 _velocityMultiplier;
 		[SerializeField] private bool _parallaxEnabled;
 
 		private Vector3 _lastReferenceTargetPosition;
@@ -29,8 +29,8 @@ namespace Game {
 			if (_parallaxEnabled) return;
 			
 			Vector3 parallaxOffset = _referenceTarget == null
-				? new Vector3(Time.time, _speedMultiplier, 0.0f)
-				: new Vector3(Time.time, CalculateReferenceVelocity().x * _speedMultiplier, 0.0f);
+				? _velocityMultiplier
+				: _velocityMultiplier;
 
 			_material.mainTextureOffset = new Vector3(parallaxOffset.x, 0.0f);
 		}

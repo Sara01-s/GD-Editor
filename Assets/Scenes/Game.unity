@@ -1795,6 +1795,7 @@ GameObject:
   - component: {fileID: 628194461}
   - component: {fileID: 628194460}
   - component: {fileID: 628194462}
+  - component: {fileID: 628194463}
   m_Layer: 3
   m_Name: Main Ground
   m_TagString: Untagged
@@ -1852,7 +1853,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.11080551, y: -0.44323397}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1863,7 +1864,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 20, y: 4}
+  m_Size: {x: 46.89736, y: 4.886468}
   m_EdgeRadius: 0
 --- !u!50 &628194461
 Rigidbody2D:
@@ -1904,9 +1905,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a032eac274791de46a313a2412ba75ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 1441047615}
-  _followX: 1
-  _followY: 0
+  <Target>k__BackingField: {fileID: 1441047615}
+  <FollowX>k__BackingField: 1
+  <FollowY>k__BackingField: 0
+  <FollowEnabled>k__BackingField: 0
+  <KeepOffset>k__BackingField: 0
+--- !u!114 &628194463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628194457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9574ae33fbd019e4ea30f49d3337a154, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameEvent: {fileID: 11400000, guid: 042ae701b711dc64aa7265192ee9cd5b, type: 2}
+  _subscribeManually: 0
+  _callback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 628194462}
+        m_TargetAssemblyTypeName: Game.FollowTransform, Assembly-CSharp
+        m_MethodName: EnableFollowing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &671043473
 GameObject:
   m_ObjectHideFlags: 0
@@ -2597,7 +2629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _referenceTarget: {fileID: 951313210}
   _material: {fileID: 2100000, guid: 1b06ed33b3207d04ebbeb0c208fe321d, type: 2}
-  _speedMultiplier: 0.21
+  _velocityMultiplier: {x: 0, y: 0, z: 0}
   _parallaxEnabled: 0
 --- !u!23 &824650861
 MeshRenderer:
@@ -3592,7 +3624,6 @@ GameObject:
   m_Component:
   - component: {fileID: 937282824}
   - component: {fileID: 937282825}
-  - component: {fileID: 937282826}
   m_Layer: 0
   m_Name: Dynamic Ground
   m_TagString: Untagged
@@ -3631,21 +3662,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _topGround: {fileID: 1250321880}
   _botGround: {fileID: 1031524948}
---- !u!114 &937282826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 937282823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a032eac274791de46a313a2412ba75ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _target: {fileID: 1441047615}
-  _followX: 0
-  _followY: 0
 --- !u!1 &940541844
 GameObject:
   m_ObjectHideFlags: 0
@@ -3792,6 +3808,7 @@ GameObject:
   - component: {fileID: 951313212}
   - component: {fileID: 951313215}
   - component: {fileID: 951313214}
+  - component: {fileID: 951313216}
   m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3896,6 +3913,7 @@ MonoBehaviour:
   _downDeadzoneThreshold: -1.21
   _startFollowThreshold: -2.5
   _followYSpeed: 1
+  _onCameraStartFollow: {fileID: 11400000, guid: 042ae701b711dc64aa7265192ee9cd5b, type: 2}
   _updateOnValidate: 0
   _showCameraGuides: 1
 --- !u!114 &951313212
@@ -4017,6 +4035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameEvent: {fileID: 11400000, guid: 68ef131aa1032ca468ff1ca0a373c391, type: 2}
+  _subscribeManually: 0
   _callback:
     m_PersistentCalls:
       m_Calls:
@@ -4044,18 +4063,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 951313211}
-        m_TargetAssemblyTypeName: Game.CameraFollow, Assembly-CSharp
-        m_MethodName: TeleportCameraToTarget
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &951313215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4069,9 +4076,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameEvent: {fileID: 11400000, guid: fc64a05bcc3fc6c48b5c243908d06637, type: 2}
+  _subscribeManually: 0
   _callback:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 951313211}
+        m_TargetAssemblyTypeName: Game.CameraFollow, Assembly-CSharp
+        m_MethodName: TeleportCameraToTarget
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 951313211}
         m_TargetAssemblyTypeName: Game.CameraFollow, Assembly-CSharp
         m_MethodName: EnableFollow
@@ -4084,6 +4104,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!50 &951313216
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951313207}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &962029054
 GameObject:
   m_ObjectHideFlags: 0
@@ -4818,7 +4865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _referenceTarget: {fileID: 951313210}
   _material: {fileID: 2100000, guid: b529253953efbda4faf797263c00c763, type: 2}
-  _speedMultiplier: 0.005
+  _velocityMultiplier: {x: 0, y: 0, z: 0}
   _parallaxEnabled: 0
 --- !u!1 &1084631053
 GameObject:
@@ -6241,6 +6288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerData: {fileID: 11400000, guid: ed374bb9b09ae81408dbe20c55867da2, type: 2}
+  _onPlayerLand: {fileID: 11400000, guid: 5e7801d9d8b7a8d4a80346438f1dede1, type: 2}
   _groundCheckPosition: {x: 0, y: -0.5}
   _groundCheckBoxScale: {x: 1.1, y: 0.05}
   _groundLayer:
@@ -6312,6 +6360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameEvent: {fileID: 11400000, guid: fc64a05bcc3fc6c48b5c243908d06637, type: 2}
+  _subscribeManually: 0
   _callback:
     m_PersistentCalls:
       m_Calls:
@@ -6329,7 +6378,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1441047621}
         m_TargetAssemblyTypeName: Game.PlayerGraphics, Assembly-CSharp
-        m_MethodName: DisableIcon
+        m_MethodName: RespawnIcon
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6352,6 +6401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameEvent: {fileID: 11400000, guid: 68ef131aa1032ca468ff1ca0a373c391, type: 2}
+  _subscribeManually: 0
   _callback:
     m_PersistentCalls:
       m_Calls:
@@ -6369,7 +6419,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1441047621}
         m_TargetAssemblyTypeName: Game.PlayerGraphics, Assembly-CSharp
-        m_MethodName: RespawnIcon
+        m_MethodName: DisableIcon
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

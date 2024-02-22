@@ -3,36 +3,49 @@ using UnityEngine;
 namespace Game {
 
 	internal sealed class FollowTransform : MonoBehaviour {
-    
-		[SerializeField] private Transform _target;
-		[SerializeField] private bool _followX;
-		[SerializeField] private bool _followY;
 
-		private Vector3 _startPosition;
+		[field:SerializeField] internal Transform Target { get; set; }
+		[field:SerializeField] internal bool FollowX { get; set; }
+		[field:SerializeField] internal bool FollowY { get; set; }
+		[field:SerializeField] internal bool FollowEnabled { get; set; }
+		[field:SerializeField] internal bool KeepOffset { get; set; }
 
-		private void Start() {
-			_startPosition = transform.position;
-		}
+		private Vector3 _startingOffset;
 
-		private void LateUpdate() {
-			if (_target == null) {
+		private void Awake() {
+			if (Target == null && FollowEnabled) {
 				Debug.LogError("Please assign a target to follow.");
 				return;
 			}
+			
+			_startingOffset = KeepOffset
+				? transform.position - Target.position
+				: Vector3.zero;
+		}
 
-			var newPosition = transform.position;
+		private void LateUpdate() {
+			if (!FollowEnabled) return;
 
-			if (_followX) {
-				newPosition.x = _startPosition.x + (_target.position.x - _startPosition.x);
-			}
+			var newPosition = Target.position + _startingOffset;
 
-			if (_followY) {
-				newPosition.y = _startPosition.y + (_target.position.y - _startPosition.y);
-			}
+			if (!FollowX) {
+                newPosition.x = transform.position.x;
+            }
+
+            if (!FollowY) {
+                newPosition.y = transform.position.y;
+            }
 
 			transform.position = newPosition;
 		}
 
+		public void EnableFollowing() {
+			FollowEnabled = true;
+		}
+
+		public void DisableFollowing() {
+			FollowEnabled = false;
+		}
+
 	}
 }
-

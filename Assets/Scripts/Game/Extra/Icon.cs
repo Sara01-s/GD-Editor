@@ -57,8 +57,17 @@ namespace Game {
 		}
 
 		private void ConfigureParticles(Color color) {
-			if (!_particlesFollowIcon) {
+			if (_particlesFollowIcon) {
 				_iconParticles.transform.SetParent(transform.parent);
+			}
+			else {
+				_iconParticles.transform.SetParent(null);
+
+				var follow = _iconParticles.gameObject.AddComponent(typeof(FollowTransform)) as FollowTransform;
+				
+				follow.Target = transform.parent;
+				follow.FollowX = true;
+				follow.FollowEnabled = true;
 			}
 
 			SetRespawnParticlesColor(color);
@@ -94,18 +103,25 @@ namespace Game {
 			_glowSpriteRenderer.gameObject.SetActive(false);
 		}
 
-		internal void ShowParticles() {
+		internal void ShowParticles(bool attachToIcon = false) {
 			if (!_iconParticles.isPlaying) {
-				print("activado");
+
+				if (attachToIcon) {
+					_iconParticles.transform.SetParent(transform.parent);
+				}
+
 				_iconParticles.Play();
 			}
 		}
 
-		internal void HideParticles() {
+		internal void HideParticles(bool detachFromIcon = false) {
 			if (_iconParticles.isPlaying) {
-				print("desactivado");
-				_iconParticles.Clear();
-				_iconParticles.Stop(withChildren: true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+				if (detachFromIcon) {
+					_iconParticles.transform.SetParent(null);
+				}
+
+				_iconParticles.Stop();
 			}
 		}
 
