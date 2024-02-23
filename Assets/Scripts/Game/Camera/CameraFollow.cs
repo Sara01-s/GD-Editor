@@ -12,7 +12,6 @@ namespace Game {
 		[SerializeField] private float _upDeadzoneThreshold;
 		[SerializeField] private float _downDeadzoneThreshold;
 		[SerializeField] private float _startFollowThreshold;
-		[SerializeField, Min(0.0f)] private float _followYSpeed;
 		[SerializeField] private GameEvent _onCameraStartFollow;
 
 		[Space(20.0f)]
@@ -20,15 +19,11 @@ namespace Game {
 		[SerializeField] private bool _showCameraGuides;
 
 		private Vector3 _transformPuppetPosition;
-		private Rigidbody2D _cameraBody;
 		private bool _canFollow;
 		private Camera _camera;
 
 		private void Awake() {
-			_cameraBody = GetComponent<Rigidbody2D>();
-			_cameraBody.isKinematic = true;
 			_camera = GetComponent<Camera>();
-
 			_transformPuppetPosition = transform.position;
 		}
 
@@ -44,7 +39,9 @@ namespace Game {
 		}
 
 		public void TeleportCameraToTarget() {
-			transform.position = _targetToFollow.position + _cameraOffset;
+			var destination = _targetToFollow.position + _cameraOffset;
+			transform.position = destination;
+			_transformPuppetPosition = destination;
 		}
 		
 		public void EnableFollow() {
@@ -53,45 +50,6 @@ namespace Game {
 		
 		public void DisableFollow() {
 			_canFollow = false;
-		}
-
-		private void FollowTarget2() {
-			if (!_canFollow) return;
-
-			var finalPosition = _transformPuppetPosition;
-			var cameraBounds = _camera.GetOrthographicBounds();
-
-			// Si el jugador supera la altura en Y de un umbral la cámara se ajusta a la altura superior.
-			if (_targetToFollow.position.y > finalPosition.y + _upDeadzoneThreshold) {
-				finalPosition.y = _targetToFollow.position.y - _upDeadzoneThreshold;
-			}
-
-			// Si el jugador baja de la altura en Y de un umbral inferior se ajusta a la altura baja.
-			if (_targetToFollow.position.y < finalPosition.y + _downDeadzoneThreshold) {
-				finalPosition.y = _targetToFollow.position.y - _downDeadzoneThreshold;
-			}
-
-			// Quitamos el camera offset para que no moleste en los siguientes cálculos
-			finalPosition -= _cameraOffset;
-
-			// La cámara NUNCA puede superar los límites de altura en Y de _minCameraY y _maxCameraY
-			if (finalPosition.y - cameraBounds.extents.y < _minCameraY) {
-				finalPosition.y = _minCameraY + cameraBounds.extents.y;
-			}
-
-			if (finalPosition.y + cameraBounds.extents.y > _maxCameraY) {
-				finalPosition.y = _maxCameraY - cameraBounds.extents.y;
-			}
-
-			// La cámara debe seguir al jugador en X SIEMPRE
-			finalPosition.x = _targetToFollow.position.x;
-
-			// 
-    		var direction = finalPosition - transform.position;
-			var desiredVelocity = direction / Time.fixedDeltaTime;
-			float smoothTime = 0.3f; // In seconds
-
-			_cameraBody.velocity = Vector3.Lerp(_cameraBody.velocity, desiredVelocity, smoothTime);
 		}
 
 		private void FollowTarget() {
@@ -161,7 +119,7 @@ namespace Game {
 
 			Gizmos.color = Color.magenta;
 			Gizmos.DrawCube(upDeadzonePosition, new Vector2(20.0f, 0.1f));
-			Gizmos.color = Color.blue;
+			Gizmos.color = Color.green;
 			Gizmos.DrawCube(downDeadzonePosition, new Vector2(20.0f, 0.1f));
 
 			Gizmos.color = Color.cyan;
